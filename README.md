@@ -2,6 +2,9 @@
 
 This project shows how to set up Rancher on a K3s cluster and deploy the `emmanuel-services` Helm app using GitHub Actions for GitOps.
 
+  <img src="assets/project-structure.jpg" alt="Project Structure" width="975" height="675" style="border-rad$
+</div>
+
 ## Structure
 
 - `manifests/namespace.yaml`: Namespace manifest for isolating the app.
