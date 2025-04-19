@@ -79,7 +79,7 @@ minikube start -p prod-cluster
 ### 4. Import Dev and Prod into Rancher
 
 In Rancher UI:
-- Go to Cluster Management > Create > Import Existing Cluster
+- Go to *Cluster Management* > *Create* > *Import Existing Cluster*
 - Name it dev-cluster, copy the provided kubectl command
 - Use that command in the corresponding context:
 
@@ -93,7 +93,7 @@ Repeat for prod-cluster.
 ### 5. Deploy emmanuel-services via Helm
 
 In Rancher UI:
-- Go to Apps > Charts > Deploy
+- Go to *Apps* > *Charts* > *Deploy*
 - Select dev-cluster or prod-cluster
 - Upload your chart or point to it
 - Customize values.yaml and deploy
@@ -138,7 +138,63 @@ minikube -p dev-cluster tunnel
 ```
 
 ---
---- 
+## Cleanup Instructions
+
+Follow these steps to completely remove the Rancher + Minikube setup and reclaim local resources:
+
+### 1. Delete All Minikube Clusters
+
+```bash
+minikube delete -p rancher-cluster
+minikube delete -p dev-cluster
+minikube delete -p prod-cluster
+```
+
+### 2. Remove Host Entry for Rancher
+
+If you added `rancher.localhost` to `/etc/hosts`, open the file and remove the entry:
+
+```bash
+sudo nano /etc/hosts
+```
+
+Delete the line:
+```
+127.0.0.1 rancher.localhost
+```
+
+### 3. Remove Docker Containers and Images (Optional)
+
+If Docker was used as the Minikube driver:
+
+```bash
+docker container prune
+docker image prune
+```
+
+### 4. Remove Helm Resources (If Applicable)
+
+```bash
+helm uninstall rancher -n cattle-system
+kubectl delete ns cattle-system
+```
+
+### 5. Delete Project Directory
+
+```bash
+rm -rf rancher-project
+```
+
+### 6. Optional: Clean All Docker Resources
+
+```bash
+docker system prune -a --volumes
+```
+
+This ensures your local system is cleaned and ready for new projects.
+
+
+---
 
 ## <div align="center">About the Author</div>
 
@@ -154,7 +210,7 @@ minikube -p dev-cluster tunnel
 Let's connect and discuss how I can help you build reliable, automated infrastructure the right way.
 
 
-——
+——-
 
 MIT License © 2025 Emmanuel Naweji
 
